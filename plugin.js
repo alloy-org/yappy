@@ -1,4 +1,4 @@
-export const plugin = {
+const plugin = {
   // --------------------------------------------------------------------------------------
   constants: {
     defaultSystemPrompt: "You are a helpful assistant.",
@@ -192,3 +192,4 @@ export const plugin = {
     summarize: content => `Summarize the following markdown-formatted note:\n\n${ content }`,
   },
 }
+module.exports = plugin;

@@ -1,4 +1,4 @@
-import { plugin } from "./plugin.js"
+const plugin = require("./plugin.js");
 
 describe("plugin", () => {
   it("should have a name", () => {

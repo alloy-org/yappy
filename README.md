@@ -16,3 +16,7 @@ So here we are.
 ## Installation
 
 Clone this repo. Install node and npm if you haven't already. Run `npm install` to install the packages.  
+
+## Testing
+
+Run `npm test` to run the tests.
