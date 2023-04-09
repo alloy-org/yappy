@@ -14,6 +14,7 @@ const plugin = {
       Respond only with plain text to be placed in the table cell. 
       If the summed cells contain a unit, include that unit in your response. The limit of your response is 20 characters.
       If you can not find numbers to sum, respond with "🤔"`,
+      thesaurus: "Provide 10 alternate words for the following:"
     },
   },
 
@@ -81,6 +82,14 @@ const plugin = {
 
       return null;
     },
+    "thesaurus": async function(app, text) {
+      const noteUUID = app.context.noteUUID;
+      const note = await app.notes.find(noteUUID);
+      const noteContent = await note.content();
+
+      const messages = this._parameterArrayFromPrompt("thesaurus", text, noteContent)
+      return await this._callOpenAI(app, "reviseText", messages);
+    }
   },
 
   // --------------------------------------------------------------------------------------
@@ -97,7 +106,6 @@ const plugin = {
       messages.push({ role: "user", content: this._truncate(userPrompt) });
     }
     try {
-
       const modelSetting = app.settings["OpenAI model (default is gpt-3.5-turbo)"];
       const model = modelSetting && modelSetting.trim().length ? modelSetting.trim() : "gpt-3.5-turbo";
       console.log("Submitting messages", messages, "while using model", model);
@@ -130,8 +138,23 @@ const plugin = {
     const noteUUID = app.context.noteUUID;
     const note = await app.notes.find(noteUUID);
     const noteContent = await note.content();
+
     const tokenLabel = `{${ this.constants.pluginName }: ${ promptEm }}`;
-    const specificityWords = [ "code", "complete", "lolz" ].includes(promptEm) ? "text" : "only the exact word or words";
+    const messages = this._parameterArrayFromPrompt(promptEm, tokenLabel, noteContent);
+    if (messages) {
+      return await this._callOpenAI(app, promptEm, messages);
+    } else {
+      return null;
+    }
+  },
+
+  // --------------------------------------------------------------------------------------
+  _parameterArrayFromPrompt(promptEm, tokenLabel, noteContent) {
+    const specificityWords = (
+      [ "code", "complete", "lolz" ].includes(promptEm)
+        ? "text"
+        : "only the exact word or words"
+    );
     const tokenReplacePrompt = `Respond with ${ specificityWords } that could be used to replace the token <token> 
       in the following input markdown document, which begins and ends with triple tildes:`;
     const prompt = this.constants.tokenReplacePrompts[promptEm];
@@ -146,8 +169,7 @@ const plugin = {
         appendMessage
       ].filter(n => n);
       console.log("Composed messages for sending", messages);
-      const result = await this._callOpenAI(app, promptEm, messages);
-      return result;
+      return messages;
     } else {
       app.alert("Couldn't find expected token in document")
       return null;
