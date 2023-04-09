@@ -19,12 +19,12 @@ Clone this repo. Install node and npm if you haven't already. Run `npm install` 
 
 ## Testing
 
-Run `npm test` to run the tests.
+Run `NODE_OPTIONS=--experimental-vm-modules npm test` to run the tests.
 
 ### Run tests continuously as modifying the plugin
 
 ```bash
-npm run test -- --watch
+NODE_OPTIONS=--experimental-vm-modules npm run test -- --watch
 ```
 
 ## Technologies used to help with this project
