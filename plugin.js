@@ -1,4 +1,4 @@
-const plugin = {
+export const plugin = {
   // --------------------------------------------------------------------------------------
   constants: {
     defaultSystemPrompt: "You are a helpful assistant.",
