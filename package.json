@@ -1,4 +1,7 @@
 {
+  "name": "yappy",
+  "version": "0.1.1",
+  "main": "lib/index.js",
   "dependencies": {
     "esbuild": "0.17.15"
   },

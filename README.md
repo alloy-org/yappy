@@ -1,7 +1,7 @@
 # Yappy
 
 Yappy is an [Amplenote plugin](https://www.amplenote.com/help/developing_amplenote_plugins) that implements 
-AI functionality wanted by its author. 
+AI functionality desired by its author. 
 
 Initially, Yappy was developed only within its note in Amplenote, but there were a few benefits to extracting 
 it to this git repo:
@@ -20,3 +20,15 @@ Clone this repo. Install node and npm if you haven't already. Run `npm install` 
 ## Testing
 
 Run `npm test` to run the tests.
+
+### Run tests continuously as modifying the plugin
+
+```bash
+npm run test -- --watch
+```
+
+## Technologies used to help with this project
+
+* https://esbuild.github.io/getting-started/#your-first-bundle
+* https://jestjs.io/
+* https://www.gitclear.com
