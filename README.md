@@ -15,7 +15,10 @@ So here we are.
 
 ## Installation
 
-Clone this repo. Install node and npm if you haven't already. Run `npm install` to install the packages.  
+1. Clone this repo. `git clone git@github.com:alloy-org/yappy.git`
+2. Install node and npm if you haven't already. 
+3. Run `npm install` to install the packages.  
+4. Copy `.env.example` to `.env` and fill in the environment variable for your OpenAI key
 
 ## Testing
 
